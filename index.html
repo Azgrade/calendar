@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Balise viewport ajoutée -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendrier de l'Avent</title>
     <style>
         body {
@@ -87,7 +87,7 @@
             position: fixed;
             top: -10px;
             color: white;
-            font-size: 3em;
+            font-size: 4em;
             animation: fall linear infinite;
         }
         @keyframes fall {
@@ -96,23 +96,6 @@
             }
             100% {
                 transform: translateY(100vh);
-            }
-        }
-
-        /* Media Queries pour la réactivité */
-        @media (max-width: 768px) {
-            .calendar {
-                grid-template-columns: repeat(3, 1fr); /* 3 colonnes pour les écrans plus petits */
-            }
-        }
-
-        @media (max-width: 480px) {
-            .calendar {
-                grid-template-columns: 1fr; /* 1 colonne pour les très petits écrans */
-            }
-
-            h1 {
-                font-size: 24px; /* Réduire la taille du titre */
             }
         }
     </style>
@@ -166,7 +149,7 @@
             // Supprimer après l'animation
             setTimeout(() => {
                 snowflake.remove();
-            }, 5000);
+            }, 6000);
         }
 
         setInterval(createSnowflake, 200);
@@ -214,4 +197,4 @@
         });
     </script>
 </body>
-</html>
+</
