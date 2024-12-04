@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier de l'Avent</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #023403, #0b6623);
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+        h1 {
+            color: #e74c3c;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px black;
+        }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            max-width: 5000px;
+            margin: 0 auto;
+        }
+        .day {
+            background: #e74c3c;
+            color: white;
+            font-size: 100px;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s, background 0.3s;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        .day.opened {
+            background: #2ecc71;
+            cursor: default;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px #2ecc71;
+        }
+        .day:hover {
+            transform: scale(1.1);
+        }
+
+        /* Modale */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 80%;
+            min-width: 300px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            color: #000;
+            text-align: center;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .modal button:hover {
+            background: #c0392b;
+        }
+
+        /* Effet de neige */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 3em;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Calendrier de l'Avent</h1>
+    <div class="calendar">
+        <!-- Générer des jours -->
+        <div class="day" data-day="1">1</div>
+        <div class="day" data-day="2">2</div>
+        <div class="day" data-day="3">3</div>
+        <div class="day" data-day="4">4</div>
+        <div class="day" data-day="5">5</div>
+        <div class="day" data-day="6">6</div>
+        <div class="day" data-day="7">7</div>
+        <div class="day" data-day="8">8</div>
+        <div class="day" data-day="9">9</div>
+        <div class="day" data-day="10">10</div>
+        <div class="day" data-day="11">11</div>
+        <div class="day" data-day="12">12</div>
+        <div class="day" data-day="13">13</div>
+        <div class="day" data-day="14">14</div>
+        <div class="day" data-day="15">15</div>
+        <div class="day" data-day="16">16</div>
+        <div class="day" data-day="17">17</div>
+        <div class="day" data-day="18">18</div>
+        <div class="day" data-day="19">19</div>
+        <div class="day" data-day="20">20</div>
+        <div class="day" data-day="21">21</div>
+        <div class="day" data-day="22">22</div>
+        <div class="day" data-day="23">23</div>
+        <div class="day" data-day="24">24</div>
+    </div>
+
+    <!-- Contenu de la modale -->
+    <div id="modal" class="modal">
+        <p id="modal-message"></p>
+        <button onclick="closeModal()">Fermer</button>
+    </div>
+
+    <script>
+        // Ajouter des flocons de neige
+        function createSnowflake() {
+            const snowflake = document.createElement("div");
+            snowflake.className = "snowflake";
+            snowflake.style.left = Math.random() * 100 + "vw";
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+            snowflake.textContent = "❄";
+            document.body.appendChild(snowflake);
+
+            // Supprimer après l'animation
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        setInterval(createSnowflake, 200);
+
+        // Récupérer les éléments
+        const days = document.querySelectorAll('.day');
+        const modal = document.getElementById('modal');
+        const modalMessage = document.getElementById('modal-message');
+        
+        const messages = {
+            1: '<img src="chat.jpg" alt="Image du jour 1" style="max-width: 50%; height: auto;">',
+            2: "C'est fou mais en francais W c'est double v et en anglais double U",
+            3: "Une citation inspirante : « Le bonheur est un choix. » pue smr en vrai",
+            4: '<video width="320" height="240" controls><source src="renne.mp4" type="video/mp4">Votre navigateur ne supporte pas la lecture de vidéos.</video>',
+            5: '<img src="frog.jpg" alt="Image du jour 1" style="max-width: 100%; height: auto;">',
+            // Ajoute d'autres messages pour les jours suivants...
+            24: "Joyeux Noël ! 🎄🎅"
+        };
+
+        // Fonction pour ouvrir la modale
+        function openModal(message) {
+            modalMessage.innerHTML = message;  // Utilisation de innerHTML pour afficher du HTML (comme une image)
+            modal.classList.add('active');
+        }
+
+        // Fonction pour fermer la modale
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        // Ajout des événements sur chaque jour
+        days.forEach(day => {
+            day.addEventListener('click', () => {
+                const dayNumber = day.getAttribute('data-day');
+                const today = new Date().getDate();
+
+                if (dayNumber <= today) {
+                    day.classList.add('opened');
+                    const message = messages[dayNumber] || "Pas de message pour aujourd'hui.";
+                    openModal(message);
+                } else {
+                    alert("Patience ! Vous ne pouvez pas encore ouvrir cette case.");
+                }
+            });
+        });
+    </script>
+</body>
+</
