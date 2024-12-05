@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Balise viewport ajoutée -->
     <title>Calendrier de l'Avent</title>
     <style>
         body {
@@ -22,13 +22,13 @@
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             gap: 10px;
-            max-width: 5000px;
+            max-width: 1000px;
             margin: 0 auto;
         }
         .day {
             background: #e74c3c;
             color: white;
-            font-size: 100px;
+            font-size: 50px;
             font-weight: bold;
             padding: 20px;
             border-radius: 8px;
@@ -98,6 +98,23 @@
                 transform: translateY(100vh);
             }
         }
+
+        /* Media Queries pour la réactivité */
+        @media (max-width: 768px) {
+            .calendar {
+                grid-template-columns: repeat(3, 1fr); /* 3 colonnes pour les écrans plus petits */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calendar {
+                grid-template-columns: 1fr; /* 1 colonne pour les très petits écrans */
+            }
+
+            h1 {
+                font-size: 24px; /* Réduire la taille du titre */
+            }
+        }
     </style>
 </head>
 <body>
@@ -165,6 +182,7 @@
             3: "Une citation inspirante : « oh nan pas le poulet whatsapp... » ",
             4: '<video width="320" height="240" controls><source src="renne.mp4" type="video/mp4">Votre navigateur ne supporte pas la lecture de vidéos.</video>',
             5: '<img src="frog.jpg" alt="Image du jour 1" style="max-width: 100%; height: auto;">',
+            6: '<video width="320" height="240" controls><source src="noix.mp4" type="video/mp4">Votre navigateur ne supporte pas la lecture de vidéos.</video>',
             // Ajoute d'autres messages pour les jours suivants...
             24: "Joyeux Noël ! 🎄🎅"
         };
@@ -197,4 +215,4 @@
         });
     </script>
 </body>
-</
+</html>
